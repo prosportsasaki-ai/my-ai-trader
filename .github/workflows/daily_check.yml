@@ -1,0 +1,19 @@
+name: Daily AI Stock Check
+on:
+  schedule:
+    - cron: '0 0 * * 1-5' # 平日の日本時間 朝9時に自動実行
+  workflow_dispatch: # 手動で動かすためのボタンを表示させる設定
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      - name: Install dependencies
+        run: pip install yfinance google-generativeai requests
+      - name: Run AI Trader
+        run: python main.py
